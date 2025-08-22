@@ -27,11 +27,14 @@ def actividad():
     # SOLICITUD A LA API
     response = requests.get(url)
 
-    # OBTENER LOS DATOS EN JSON
-    actividad_data = response.json()
-
-    # FILTRAR SOLO LA ACTIVIDAD Y SI NO SE ENCUENTRA SE MANDA UN MENSAJE
-    actividad = actividad_data.get('activity', 'No se encontro actividad')
+    if response.status_code == 200:
+        # OBTENER LOS DATOS EN JSON
+        actividad_data = response.json()
+        # FILTRAR SOLO LA ACTIVIDAD Y SI NO SE ENCUENTRA SE MANDA UN MENSAJE
+        actividad = actividad_data.get('activity', 'No se encontro actividad')
+    else:
+        # MANDAR MENSAJE SI HUBO ERROR EN LA SOLICITUD
+        actividad = 'Error al recibir la actividad'
 
     # MOSTRAR ACTIVIDAD
     return actividad
