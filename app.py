@@ -36,7 +36,7 @@ def actividad():
         actividad = f'Error al realizar la solicitud a la API: {str(e)}'
 
     # MOSTRAR ACTIVIDAD
-    return actividad
+    return render_template('index.html', actividad=actividad)
 
 if __name__ == '__main__':
     app.run(debug=True)

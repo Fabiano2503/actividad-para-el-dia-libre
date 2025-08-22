@@ -6,6 +6,32 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hola Mundo</h1>
+    <div>
+        <h1>Sugerir Actividad</h1>
+
+        <!-- GENERAR ACTIVIDAD -->
+        <form action="{{ url_for('actividad') }}" method="get">
+            <label for="type">Selecciona un tipo de actividad:</label>
+            <select id="type" name="type">
+                <option value="">Aleatorio</option>
+                <option value="education">Educativo</option>
+                <option value="recreational">Recreativo</option>
+                <option value="social">Social</option>
+                <option value="diy">Bricolaje</option>
+                <option value="charity">Caridad</option>
+                <option value="cooking">Cocina</option>
+                <option value="relaxation">Relajación</option>
+                <option value="music">Música</option>
+                <option value="busywork">Trabajo Rutinario</option>
+            </select>
+            <button type="submit">Mostrar Actividad</button>
+        </form>
+
+        <!-- RESULTADO DE ACTIVIDAD -->
+        <div>
+            <p>{{ actividad }}</p>
+        </div>
+
+    </div>
 </body>
 </html>
