@@ -17,24 +17,23 @@ def actividad():
     # URL DE LA API
     url_api = 'http://bored.api.lewagon.com/api/activity/'
 
-    if actividad_type:
-        # SI HAY TIPO DE ACTIVIDAD AGREGARLO A LA URL
-        url = f'{url_api}?type={actividad_type}'
-    else:
-        # SI NO HAY GENERAR ACTIVIDAD ALEATORIA
-        url = url_api
-
-    # SOLICITUD A LA API
-    response = requests.get(url)
-
-    if response.status_code == 200:
+    # CONCATENAR URL SEGUN SI SE ESPECIFICA UN TIPO DE ACTIVIDAD O NO
+    url = f'{url_api}?type={actividad_type}' if actividad_type else url_api
+    
+    try:
+        # SOLICITUD A LA API
+        response = requests.get(url)
+        # VERIFICAR SI LA RESPUESTA FUE EXITOSA (STATUS CODE 200)
+        response.raise_for_status()
+    
         # OBTENER LOS DATOS EN JSON
         actividad_data = response.json()
         # FILTRAR SOLO LA ACTIVIDAD Y SI NO SE ENCUENTRA SE MANDA UN MENSAJE
         actividad = actividad_data.get('activity', 'No se encontro actividad')
-    else:
-        # MANDAR MENSAJE SI HUBO ERROR EN LA SOLICITUD
-        actividad = 'Error al recibir la actividad'
+
+    except requests.exceptions.RequestException as e:
+        # MANEJAR ERRORES RELACIONADOS CON LA SOLICITUD
+        actividad = f'Error al realizar la solicitud a la API: {str(e)}'
 
     # MOSTRAR ACTIVIDAD
     return actividad
