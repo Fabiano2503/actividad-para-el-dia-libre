@@ -40,8 +40,12 @@ def actividad():
 
 @app.route('/test_historial')
 def test_historial():
-    historial_actividades = []
-    return render_template("test_historial.html")
+    historial_actividades = [
+        {"actividad": "Leer libro", "tipo": "educativo"},
+        {"actividad": "Limpia tu garaje", "tipo": ""},
+        {"actividad": "Escucha una nueva canción", "tipo": "música"},
+    ]
+    return render_template("test_historial.html", historial=historial_actividades)
 
 if __name__ == '__main__':
     app.run(debug=True)
