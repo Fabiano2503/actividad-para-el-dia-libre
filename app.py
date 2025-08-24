@@ -38,5 +38,10 @@ def actividad():
     # MOSTRAR ACTIVIDAD
     return render_template('index.html', actividad=actividad)
 
+@app.route('/test_historial')
+def test_historial():
+    historial_actividades = []
+    return render_template("test_historial.html")
+
 if __name__ == '__main__':
     app.run(debug=True)
