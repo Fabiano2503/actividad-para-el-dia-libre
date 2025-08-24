@@ -31,6 +31,17 @@
         <div>
             <p>{{ actividad }}</p>
         </div>
+        
+        <h2>Historial de Actividades</h2>
+        <ul>
+            {% if historial %}
+            {% for item in historial %}
+            <li><strong>{{ item.actividad }}</strong> (Tipo: {{ item.tipo if item.tipo else 'random' }})</li>
+            {% endfor %}
+            {% else %}
+            <li>No hay actividades previas.</li>
+            {% endif %}
+        </ul>
 
     </div>
 </body>
