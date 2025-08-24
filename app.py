@@ -5,9 +5,11 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '12345678'
 
+historial_actividades = []
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', historial=historial_actividades)
 
 @app.route('/actividad', methods=['GET'])
 def actividad():
@@ -26,26 +28,20 @@ def actividad():
         # VERIFICAR SI LA RESPUESTA FUE EXITOSA (STATUS CODE 200)
         response.raise_for_status()
     
-        # OBTENER LOS DATOS EN JSON
+        # CONVERTIR LOS DATOS JSON EN UN DICCIONARIO
         actividad_data = response.json()
         # FILTRAR SOLO LA ACTIVIDAD Y SI NO SE ENCUENTRA SE MANDA UN MENSAJE
         actividad = actividad_data.get('activity', 'No se encontro actividad')
+
+        # AGREGAR LA ACTIVIDAD AL HISTORIAL
+        historial_actividades.append({"actividad": actividad, "tipo": actividad_type})
 
     except requests.exceptions.RequestException as e:
         # MANEJAR ERRORES RELACIONADOS CON LA SOLICITUD
         actividad = f'Error al realizar la solicitud a la API: {str(e)}'
 
     # MOSTRAR ACTIVIDAD
-    return render_template('index.html', actividad=actividad)
-
-@app.route('/test_historial')
-def test_historial():
-    historial_actividades = [
-        {"actividad": "Leer libro", "tipo": "educativo"},
-        {"actividad": "Limpia tu garaje", "tipo": ""},
-        {"actividad": "Escucha una nueva canción", "tipo": "música"},
-    ]
-    return render_template("test_historial.html", historial=historial_actividades)
+    return render_template('index.html', actividad=actividad, historial=historial_actividades)
 
 if __name__ == '__main__':
     app.run(debug=True)
