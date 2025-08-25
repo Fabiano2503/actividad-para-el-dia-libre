@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Document</title>
+    <title>La Actividad del Día</title>
 </head>
 <body>
     <div>
@@ -29,10 +29,13 @@
         </form>
 
         <!-- RESULTADO DE ACTIVIDAD -->
+        {% if actividad %}
         <div>
             <p>{{ actividad }}</p>
         </div>
+        {% endif %}
         
+        <!-- HISTORIAL -->
         <h2>Historial de Actividades</h2>
         <ul>
             {% if historial %}
