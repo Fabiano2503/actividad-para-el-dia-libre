@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>La Actividad del Día</title>
+</head>
+<body>
+    <div>
+        <h1>Sugerir Actividad</h1>
+
+        <!-- GENERAR ACTIVIDAD -->
+        <form action="{{ url_for('actividad') }}" method="get">
+            <label for="type">Selecciona un tipo de actividad:</label>
+            <select id="type" name="type">
+                <option value="">Aleatorio</option>
+                <option value="education">Educativo</option>
+                <option value="recreational">Recreativo</option>
+                <option value="social">Social</option>
+                <option value="diy">Bricolaje</option>
+                <option value="charity">Caridad</option>
+                <option value="cooking">Cocina</option>
+                <option value="relaxation">Relajación</option>
+                <option value="music">Música</option>
+                <option value="busywork">Trabajo Rutinario</option>
+            </select>
+            <button type="submit">Mostrar Actividad</button>
+        </form>
+
+        <!-- RESULTADO DE ACTIVIDAD -->
+        {% if actividad %}
+        <div>
+            <p>{{ actividad }}</p>
+        </div>
+        {% endif %}
+        
+        <!-- HISTORIAL -->
+        <h2>Historial de Actividades</h2>
+        <ul>
+            {% if historial %}
+            {% for item in historial %}
+            <li><strong>{{ item.actividad }}</strong> (Tipo: {{ item.tipo if item.tipo else 'random' }})</li>
+            {% endfor %}
+            {% else %}
+            <li>No hay actividades previas.</li>
+            {% endif %}
+        </ul>
+
+    </div>
+</body>
+</html>
